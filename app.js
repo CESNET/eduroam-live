@@ -6,15 +6,17 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fs = require( 'fs' );
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const config = require('./config/config');
+const key = fs.readFileSync(config.key);
+const cert = fs.readFileSync(config.cert);
+const https = require('https').createServer({ key : key, cert : cert }, app);
+const io = require('socket.io')(https);
+
 // --------------------------------------------------------------------------------------
 
 // disable express header
 app.disable('x-powered-by')
 
-// init session
-//app.set('trust proxy', 1)       // app is behind a proxy
 // --------------------------------------------------------------------------------------
 // view engine setup
 app.set('views', __dirname + '/views');
@@ -41,7 +43,7 @@ io.on('connection', function(socket){
   console.log('A new WebSocket connection has been established');
 });
 
-http.listen(8088, function() {
+https.listen(8088, function() {
   console.log('Listening on *:8088');
 });
 
