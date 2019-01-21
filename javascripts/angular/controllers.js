@@ -13,7 +13,6 @@ angular.module('etlog').controller('presenstation_controller', ['$scope', '$http
 
   advanced_terminal(socket, max_lines);
   //terminal_fun();
-  //super_terminal(socket, max_lines);
   graph_pres_new(graph_title1, tag1, hook1, socket);
   graph_pres_new(graph_title2, tag2, hook2, socket);
 
@@ -42,60 +41,6 @@ function terminal_fun()
   }, 60 * 1000); // every 60 seconds
 }
 // --------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------
-// tohle nefunguje uplne dobre, protoze muze dojit k vice volanim funkce zaroven
-// a pak se cely text rozbije
-// bylo by potreba funkci nejak zamykat, aby dalsi volani cekalo na dokonceni aktualniho
-// handle terminal
-// --------------------------------------------------------------------------------------
-function super_terminal(socket, max_lines)
-{
-  //string_splice();
-  var lines = [];
-
-  var el = document.getElementById('terminal');
-  var pr = '<span class="prompt">root@radius1.eduroam.cz:~$ </span>';
-
-  // the array is reversed because of display method
-  // the newest elements are added to the front
-
-  socket.on('log_ok', function(data) {
-    if(lines.length == max_lines)
-      lines.splice(0, 1);       //delete last
-
-    var line = data + "\n";
-
-    if(!el.innerHTML)
-      ;     // TODO
-    else {
-      // debug
-      if(el.innerHTML.length < 10) {
-        el.innerHTML = "";
-
-      }
-
-      el.innerHTML += pr + '<span class="ok"></span>';
-
-      var idx = el.innerHTML.length - 8;        // ending span length
-
-      for(var i = 0; i < line.length; i++) {
-        setTimeout((function(c, i) {
-          el.innerHTML = el.innerHTML.substring(0, idx + 1 + i) + c + '</span>';
-        }).bind(null, line[i], i), 1 * (i + 1));
-      }
-    }
-
-  });
-
-  //socket.on('log_fail', function(data) {
-  //  if(lines.length == max_lines)
-  //    lines.splice(0, 1);       //delete last
-
-  //  lines.push(pr + '<span class="fail">' + data + '</span>');       // add to start
-  //  el.innerHTML = lines.join("\n");
-  //});
-}
-// --------------------------------------------------------------------------------------
 // handle terminal
 // --------------------------------------------------------------------------------------
 function advanced_terminal(socket, max_lines)
@@ -121,36 +66,6 @@ function advanced_terminal(socket, max_lines)
       lines.splice(0, 1);       //delete last
 
     lines.push(pr + '<span class="fail">' + data + '</span>');       // add to start
-    el.innerHTML = lines.join("\n");
-  });
-}
-// --------------------------------------------------------------------------------------
-// handle terminal
-// --------------------------------------------------------------------------------------
-function basic_terminal(socket)
-{
-  var lines = [];
-
-  var el = document.getElementById('terminal');
-
-  // the array is reversed because of display method
-  // the newest elements are added to the front
-
-  socket.on('log_ok', function(data) {
-    if(lines.length > 50)
-      lines.pop();       //delete last
-    else
-      lines.unshift('<span class="ok">' + data + '</span>');       // add to start
-
-    el.innerHTML = lines.join("\n");
-  });
-
-  socket.on('log_fail', function(data) {
-    if(lines.length > 50)
-      lines.pop();       //delete last
-    else
-      lines.unshift('<span class="fail">' + data + '</span>');       // add to start
-
     el.innerHTML = lines.join("\n");
   });
 }
