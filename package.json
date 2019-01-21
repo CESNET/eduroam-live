@@ -6,13 +6,9 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "api-query-params": "https://github.com/lager1/api-query-params/tarball/master",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
-    "d3-node": "^1.1.3",
-    "d3v4": "^4.2.2",
     "express": "^4.16.4",
-    "express-request-proxy": "^2.2.2",
     "gulp": "^4.0.0",
     "gulp-clean-css": "^3.10.0",
     "gulp-concat": "^2.6.1",
@@ -32,8 +28,6 @@
     "streamqueue": "^1.1.2",
     "svg2png": "^4.1.1",
     "tail": "^2.0.2",
-    "through2": "^2.0.3",
-    "websocket": "^1.0.28",
-    "ws": "^6.1.2"
+    "through2": "^2.0.3"
   }
 }
