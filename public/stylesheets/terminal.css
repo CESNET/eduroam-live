@@ -1,0 +1,62 @@
+/*
+strml.net?
+*/
+
+/* animace */
+* {
+  -webkit-transition: all 1s;
+}
+
+body {
+  -webkit-perspective: 1000px;
+  overflow-x: hidden;
+}
+
+pre:not(:empty) {
+  overflow: auto;
+  background: rgb(48, 48, 48);
+  border: 1px solid #ccc;
+  max-height: 256px;
+  min-height: 10px;
+  width: 99.5%;
+  font-size: 14px;
+  font-family: monospace;
+  padding: 2px 4px 2px;
+  box-shadow: -4px 4px 2px 0 rgba(0,0,0,0.3);
+
+  /* dodatecne styly */
+  overflow: hidden;
+}
+
+pre {
+  border-radius: 1px;
+}
+
+pre, a {
+  color: white;
+}
+
+/* dodatecne styly pro obarveni textu */
+
+.ok {
+  /* color: #1F5E9C; */
+  color: steelblue;
+}
+
+.fail {
+  /* color: #CF1414; */
+  color: #ea3933;
+}
+
+.prompt {
+  color: #3D8C5D;
+}
+
+span {
+  display: inline;
+}
+
+#terminal {
+  /* -webkit-transform: translateX(-8.5%) rotateY(-10deg); */    /* v1 */
+  /* -webkit-transform: translateX(-15.5%) rotateY(-20deg);  */   /* v2 */ 
+}

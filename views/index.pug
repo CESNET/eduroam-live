@@ -1,0 +1,19 @@
+doctype html
+html(ng-app="etlog")
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Prezentace
+    script(src="/socket.io/socket.io.js")
+    script(src='/javascripts/app.js')
+    link(rel='stylesheet', href='/stylesheets/prezentace.css')
+    link(rel='stylesheet', href='/stylesheets/app.min.css')
+    link(rel='stylesheet', href='/stylesheets/terminal.css')
+
+  body
+    div(ng-controller='presenstation_controller')
+      svg#most_provided
+      svg#most_used
+      pre#terminal
+
