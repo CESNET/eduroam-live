@@ -34,6 +34,9 @@ module.exports = function(io) {
   {
     var fields = data.split("#");
 
+    if(fields.length != 7)      // malformed record
+      return;
+
     var realm = fields[1].split("=")[1];
     var visinst = fields[3].split("=")[1].replace(/^1/, "");
     var result = fields[6].split("=")[1];
