@@ -8,7 +8,7 @@ angular.module('etlog').controller('presenstation_controller', ['$scope', '$http
   var graph_title2 = "organizace nejvíce využívající roaming";
   var tag2 = "#most_used";
   var hook2 = "update_used";
-  var max_lines = 16;
+  var max_lines = 9;
   var socket = io();
 
   advanced_terminal(socket, max_lines);

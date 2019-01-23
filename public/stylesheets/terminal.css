@@ -10,16 +10,17 @@ strml.net?
 body {
   -webkit-perspective: 1000px;
   overflow-x: hidden;
+  margin: 0px 0px 0px;
 }
 
 pre:not(:empty) {
   overflow: auto;
   background: rgb(48, 48, 48);
   border: 1px solid #ccc;
-  max-height: 256px;
+  max-height: 200px;
   min-height: 10px;
-  width: 99.5%;
-  font-size: 14px;
+  width: 99.4%;
+  font-size: 19px;
   font-family: monospace;
   padding: 2px 4px 2px;
   box-shadow: -4px 4px 2px 0 rgba(0,0,0,0.3);
@@ -57,6 +58,6 @@ span {
 }
 
 #terminal {
-  /* -webkit-transform: translateX(-8.5%) rotateY(-10deg); */    /* v1 */
-  /* -webkit-transform: translateX(-15.5%) rotateY(-20deg);  */   /* v2 */ 
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
