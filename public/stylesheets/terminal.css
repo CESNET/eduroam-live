@@ -3,9 +3,11 @@ strml.net?
 */
 
 /* animace */
+/*
 * {
   -webkit-transition: all 1s;
 }
+*/
 
 body {
   -webkit-perspective: 1000px;
