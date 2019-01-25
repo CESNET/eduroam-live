@@ -10,7 +10,7 @@ strml.net?
 body {
   -webkit-perspective: 1000px;
   overflow-x: hidden;
-  margin: 0px 0px 0px;
+  margin: 0px 1px 0px;
 }
 
 pre:not(:empty) {
