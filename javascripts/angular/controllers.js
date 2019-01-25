@@ -15,7 +15,6 @@ angular.module('etlog').controller('presenstation_controller', ['$scope', '$http
   //terminal_fun();
   graph_pres_new(graph_title1, tag1, hook1, socket);
   graph_pres_new(graph_title2, tag2, hook2, socket);
-
 }]);
 // --------------------------------------------------------------------------------------
 function terminal_fun()
