@@ -40,6 +40,7 @@ module.exports = function(io) {
     var realm = fields[1].split("=")[1];
     var visinst = fields[3].split("=")[1].replace(/^1/, "");
     var result = fields[6].split("=")[1];
+    var csi = fields[4].split("=")[1].replace(/\./g, "").replace(/-/g,"").toLowerCase();
 
     if(realm.indexOf(".cz") == -1 || visinst.indexOf(".cz") == -1)      // only .cz
       return;
@@ -47,7 +48,10 @@ module.exports = function(io) {
     var line = data.replace(/PN=.*@/, "PN=***@")                            // hide username, 
                    .replace(/195\.113\.187\.41 fticks\[\d+\]: /, "")        // remove IP and process number
                    .replace(/CSI=.*#PN/, "CSI=xx-xx-xx-xx-xx-xx#PN");       // hide MAC address
-    
+
+    if(csi.match(/706f6c6[9-f]/))       // monitoring
+      return;
+
     if(result == "OK") {        // OK
       if(!most_used[realm])
         most_used[realm] = { ok : 0, fail : 0 };
