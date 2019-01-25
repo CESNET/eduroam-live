@@ -92,64 +92,57 @@ function graph_pres_new(title, tag, event_name, socket)
 
   var svg = d3.select(tag)
   svg = svg.attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+           .attr("height", height + margin.top + margin.bottom)
+           .append("g")
+           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   // ==================================================
   // set graph title
   svg.append("text")
-    .attr("x", (width / 2))
-    .attr("y", 0 - (margin.top / 2))
-    .attr("text-anchor", "middle")
-    .style("font-size", "36px")
-    .style("fill", "white")
-    .style("text-decoration", "underline")
-    .text(title);
+     .attr("x", (width / 2))
+     .attr("y", 0 - (margin.top / 2))
+     .attr("text-anchor", "middle")
+     .style("font-size", "36px")
+     .style("fill", "white")
+     .style("text-decoration", "underline")
+     .text(title);
 
   // ==================================================
   // text label for the y axis
   svg.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left + 20)
-    .attr("x",0 - (height / 2))
-    .attr("dy", "1em")
-    .style("font-size", "18px")
-    .style("fill", "white")
-    .style("text-anchor", "middle")
-    .text("počet autentizací");
+     .attr("transform", "rotate(-90)")
+     .attr("y", 0 - margin.left + 20)
+     .attr("x",0 - (height / 2))
+     .attr("dy", "1em")
+     .style("font-size", "24px")
+     .style("fill", "white")
+     .style("text-anchor", "middle")
+     .text("počet autentizací");
 
   // ==================================================
   // add the x Axis
   var x_axis = svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .attr("class", "x axis")
-      .style("fill", "white")
-      .style("font-size", "18px");
+                  .attr("transform", "translate(0," + height + ")")
+                  .attr("class", "x axis")
+                  .style("fill", "white")
+                  .style("font-size", "18px");
 
   // ==================================================
   // add the y Axis
   var y_axis = svg.append("g")
-      .attr("class", "y axis")
-      .style("fill", "white")
-      .style("font-size", "18px");
+                  .attr("class", "y axis")
+                  .style("fill", "white")
+                  .style("font-size", "18px");
 
   // ==================================================
-  // get initial data
+  // handle data when they arrive
 
   socket.on(event_name, function(data) {
-  // ==================================================
-    //var transition = svg.transition().duration(750);
-    //var delay = function(d, i) { return i * 50; };
-    //var t = d3.transition().duration(750);
-  // ==================================================
-    var transition = svg.transition().duration(200);
-    var delay = function(d, i) { return i * 15; };
-    var t = d3.transition().duration(200);
-
-
-    //// debug
-    //console.log(data);
+    // ==================================================
+    // transitions
+    var transition = svg.transition().duration(750);
+    var delay = function(d, i) { return i * 50; };
+    var t = d3.transition().duration(750);
 
     // ==================================================
     // Scale the range of the data in the domains
@@ -162,91 +155,97 @@ function graph_pres_new(title, tag, event_name, socket)
 
     // ==================================================
 
-      var bars = svg.selectAll(".bar").data(data, function(d) { return d[0]; }); // JOIN new data with old elements
-
-      svg.selectAll(".bar").selectAll(".blue")
-          .data(function(d) { return [d]; });
-
-      svg.selectAll(".bar").selectAll(".red")
-          .data(function(d) { return [d]; });
+    var bars = svg.selectAll(".bar").data(data, function(d) { return d[0]; }); // JOIN new data with old elements
 
     // ==================================================
-      // exit old elements
-      bars.exit()
-          .selectAll('.box')
-          .attr("class", "remove")      // different class to not be selected by update
-          .transition(t)
-          .attr("y", y(0))
-          .attr("height", 0)
-          .remove();      // EXIT old elements not present in new data
 
-      bars.exit()
-          .transition(t)    // wait for removing .box
-          .remove()      // EXIT old elements not present in new data
+    // exit old elements
+    bars.exit()
+        .attr("class", "remove")      // different class to not be selected by update, class is set on g elements
+        .selectAll("rect")        // update rect elements, not g elements
+        .transition(t)
+        .attr("y", y(0))
+        .attr("height", 0)
+        .remove();      // EXIT old elements not present in new data
+
+    bars.exit()           // remove parent g elements
+        .transition(t)    // wait for removing rect elements
+        .remove()      // EXIT old elements not present in new data
+
+    // ==================================================
+    // add new data
+    // data with realms that were not present in previous data update
+    bars = bars.enter()
+               .append('g')
+               .attr('class', 'bar');
+
+    // blue
+    bars.append("rect")
+        .attr("class", "blue")
+        .attr("y", function(d) { return y(0); })        // just for good looks - bar rises up from x axis
+        .attr("width", x.bandwidth())                   // also set bar width in case different number of bars was present
+        .attr("x", function(d) { return x(d[0]); });    // move on x
+
+    // red
+    bars.append("rect")
+        .attr("class", "red")
+        .attr("y", function(d) { return y(0); })        // just for good looks - bar rises up from x axis
+        .attr("width", x.bandwidth())                   // also set bar width in case different number of bars was present
+        .attr("x", function(d) { return x(d[0]); });    // move on x
+
+    // merge new data (new realms only) with old data (realms that didnt change, but the ok/fail count may have changed)
+    bars = bars.merge(bars);
+
+    // ==================================================
+
+    // update data present in blue/red bars
+    // .bar selection is necessary for update parent data access
+    // -> the data are present on all .bar elements
+
+    svg.selectAll(".bar")
+       .selectAll(".blue")
+       .data(function(d) { return [d]; });
+
+    svg.selectAll(".bar")
+       .selectAll(".red")
+       .data(function(d) { return [d]; });
 
     // ==================================================
     // UPDATE old elements present in new data
 
-    transition.selectAll(".box")
-        .delay(delay)
-        .attr("width", x.bandwidth())                                     // also set bar width in case different number of bars was present
-        .attr("x", function(d) { return x(d[0]); });               // move on x
+    //transition.selectAll("rect")        // update the rect elements
+    transition.selectAll(".bar rect")        // update the rect elements
+              .delay(delay)
+              .attr("width", x.bandwidth())                                     // also set bar width in case different number of bars was present
+              .attr("x", function(d) { return x(d[0]); });               // move on x
 
     transition.selectAll(".blue")
-        .delay(delay)
-        .attr("y", function(d) { return y(d[1].ok); })
-        .attr("height", function(d) { return y(0) - y(d[1].ok); });          // update OK
+              .delay(delay)
+              .attr("y", function(d) { return y(d[1].ok); })
+              .attr("height", function(d) { return y(0) - y(d[1].ok); });          // update OK
 
     transition.selectAll(".red")
-        .delay(delay)
-        .attr("y", function(d) { return y(d[1].fail); })
-        .attr("height", function(d) { return y(0) - y(d[1].fail); })         // update FAIL
-
-
-    // ==================================================
-    // add new data
-    bars = bars.enter()
-       .append('g')
-       .attr('class', 'bar');
-
-       // blue
-       bars.append("rect")
-       .attr("class", "blue box")
-       .attr("x", function(d) { return x(d[0]); })
-       .attr("width", x.bandwidth())
-       .attr("y", y(0))
-       .transition(t)
-       .attr("height", function(d) { return y(0) - y(d[1].ok); })
-       .attr("y", function(d) { return y(d[1].ok); })
-
-       bars.append("rect")
-       .attr("class", "red box")
-       .attr("x", function(d) { return x(d[0]); })
-       .attr("width", x.bandwidth())
-       .attr("y", y(0))
-       .transition(t)
-       .attr("height", function(d) { return y(0) - y(d[1].fail); })
-       .attr("y", function(d) { return y(d[1].fail); })
-
-    bars = bars.merge(bars);
+              .delay(delay)
+              .attr("y", function(d) { return y(d[1].fail); })
+              .attr("height", function(d) { return y(0) - y(d[1].fail); })         // update FAIL
 
     // ==================================================
     // dynamic axes transitions
     transition.select(".x.axis")
-        .call(d3.axisBottom(x))
-        .selectAll("text")
-        .attr("dy", ".35em")
-        .attr("y", 20)
-        .attr("x", 0)
-        .attr("transform", "rotate(45)")
-        .style("text-anchor", "start")
-        .delay(delay);
+              .call(d3.axisBottom(x))
+              .selectAll("text")
+              .attr("dy", ".35em")
+              .attr("y", 20)
+              .attr("x", 0)
+              .attr("transform", "rotate(45)")
+              .style("text-anchor", "start")
+              .delay(delay);
 
     transition.select(".y.axis")
-        .call(d3.axisLeft(y)
-        .tickSize(-width, 0, 0)
-        .tickFormat(d3.format("d"))) // custom format - disable comma for thousands
-        .delay(delay);
+              .call(d3.axisLeft(y)
+              .tickSize(-width, 0, 0)
+              .tickFormat(d3.format("d"))) // custom format - disable comma for thousands
+              .delay(delay);
   });
 }
 // --------------------------------------------------------------------------------------
