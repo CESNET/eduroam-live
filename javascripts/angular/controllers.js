@@ -47,7 +47,7 @@ function advanced_terminal(socket, max_lines)
   var lines = [];
 
   var el = document.getElementById('terminal');
-  var pr = '<span class="prompt">root@radius1.eduroam.cz:~$ </span>';
+  var pr = '<span class="prompt">root@eduroam.cz:~$ </span>';
 
   // the array is reversed because of display method
   // the newest elements are added to the front
