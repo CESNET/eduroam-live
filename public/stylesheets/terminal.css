@@ -19,7 +19,7 @@ pre:not(:empty) {
   overflow: auto;
   background: rgb(48, 48, 48);
   border: 1px solid #ccc;
-  max-height: 200px;
+  max-height: 350px;
   min-height: 10px;
   width: 99.4%;
   font-size: 19px;
