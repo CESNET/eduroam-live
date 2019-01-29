@@ -133,6 +133,36 @@ function graph_pres_new(title, tag, event_name, socket)
                   .style("fill", "white")
                   .style("font-size", "18px");
 
+
+  // ==================================================
+  var legend = svg.append("g")
+    .attr("transform", "translate(0,530)")
+    .attr("class", "legend")
+    .attr("width", 200)
+    .attr("height", 110)
+    .selectAll('.legend')
+    .data([0, 1])
+    .enter()
+    .append('g')
+
+  legend.append("rect")
+    .attr("width", 40)
+    .attr("height", 40)
+    .attr("y", function(d, i) { return -20 + i * 40 - 10; })
+    .attr("x", function(d, i) { return 0; })
+    .style("fill", function (d, i) { return colors[i]; })
+    .style("opacity", "0.8")
+
+  legend.append("text")
+    .attr("width", 40)
+    .attr("height", 40)
+    .attr("y", function(d, i) { return i * 40; })
+    .attr("x", function(d, i) { return 45; })
+    .style("font-size", "24px")
+    .style("fill", "white")
+    .text(function (d) { if(d == 0) return "úspěšné autentizace"; return "neúspěšné autentizace"; })
+
+
   // ==================================================
   // handle data when they arrive
 
