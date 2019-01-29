@@ -103,7 +103,7 @@ function graph_pres_new(title, tag, event_name, socket)
      .attr("text-anchor", "middle")
      .style("font-size", "36px")
      .style("fill", "white")
-     .style("text-decoration", "underline")
+     //.style("text-decoration", "underline")
      .text(title);
 
   // ==================================================
