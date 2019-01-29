@@ -72,10 +72,10 @@ function advanced_terminal(socket, max_lines)
 function graph_pres_new(title, tag, event_name, socket)
 {
   // Setup svg using Bostock's margin convention
-  var margin = {top: 80, right: 20, bottom: 180, left: 80};
+  var margin = {top: 80, right: 0, bottom: 200, left: 80};
 
-  var width = $(window).width() / 2 - 130;      // compensate for y axis labels
-  var height = 600 - margin.top - margin.bottom;
+  var width = $(window).width() / 2 - 100;      // compensate for y axis labels
+  var height = 660 - margin.top - margin.bottom;
 
   var colors = [ "#225885", "#ea3933" ];
 
