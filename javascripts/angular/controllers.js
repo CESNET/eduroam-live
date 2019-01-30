@@ -72,7 +72,7 @@ function advanced_terminal(socket, max_lines)
 function graph_pres_new(title, tag, event_name, socket)
 {
   // Setup svg using Bostock's margin convention
-  var margin = {top: 80, right: 0, bottom: 200, left: 80};
+  var margin = {top: 80, right: 0, bottom: 200, left: 70};
 
   var width = $(window).width() / 2 - 100;      // compensate for y axis labels
   var height = 660 - margin.top - margin.bottom;
@@ -98,7 +98,7 @@ function graph_pres_new(title, tag, event_name, socket)
   // ==================================================
   // set graph title
   svg.append("text")
-     .attr("x", (width / 2))
+     .attr("x", (width / 2) - 5)
      .attr("y", 0 - (margin.top / 2))
      .attr("text-anchor", "middle")
      .style("font-size", "36px")
