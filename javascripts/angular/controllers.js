@@ -175,11 +175,7 @@ function graph_pres_new(title, tag, event_name, socket)
     // ==================================================
     // Scale the range of the data in the domains
     x.domain(data.map(function(d) { return d[0]; }));
-    y.domain([0, d3.max(data, function(d) {
-      if(d[1].fail > d[1].ok)
-        return d[1].fail;
-      return d[1].ok;
-    })]);
+    y.domain([0, d3.max(data, function(d) { return d[1].ok + d[1].fail; })]);       // max from fail + ok
 
     // ==================================================
 
@@ -217,7 +213,7 @@ function graph_pres_new(title, tag, event_name, socket)
     // red
     bars.append("rect")
         .attr("class", "red")
-        .attr("y", function(d) { return y(0); })        // just for good looks - bar rises up from x axis
+        .attr("y", function(d) { return y(d[1].fail); })        // just for good looks - bar rises up from blue bar
         .attr("width", x.bandwidth())                   // also set bar width in case different number of bars was present
         .attr("x", function(d) { return x(d[0]); });    // move on x
 
@@ -254,7 +250,7 @@ function graph_pres_new(title, tag, event_name, socket)
 
     transition.selectAll(".red")
               .delay(delay)
-              .attr("y", function(d) { return y(d[1].fail); })
+              .attr("y", function(d) { return 0 + y(d[1].ok) - y(0) + y(d[1].fail); })
               .attr("height", function(d) { return y(0) - y(d[1].fail); })         // update FAIL
 
     // ==================================================
