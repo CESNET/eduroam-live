@@ -1,11 +1,9 @@
 body {
   background-color: black;
 }
-
 .axis text {
   fill: white;
 }
-
 .blue {
   opacity: 0.8;
   fill: steelblue;
