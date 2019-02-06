@@ -77,7 +77,7 @@ function graph_pres_new(title, tag, event_name, socket)
   var width = $(window).width() / 2 - 100;      // compensate for y axis labels
   var height = 660 - margin.top - margin.bottom;
 
-  var colors = [ "#225885", "#ea3933" ];
+  var colors = [ "#4682b4", "#ea3933" ];
 
   // --------------------------------------------------------------------
   // set the ranges
