@@ -75,9 +75,6 @@ module.exports = function(io) {
 
     // --------------------------------------------------------------------------------------
 
-    // TODO - obcas jsou na frontendu prazdne sloupce
-    // viz debug.sh
-
     var most_used_data = Object.entries(most_used).sort(sort_by_ok).slice(0, 10);
     var most_provided_data = Object.entries(most_provided).sort(sort_by_ok).slice(0, 10);
 
