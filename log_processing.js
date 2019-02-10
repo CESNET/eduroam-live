@@ -85,13 +85,6 @@ module.exports = function(io) {
     // just on the best
     for(var i = 0; i < 10; i++) {
       if(realm == most_used_data[i][0]) {      // realm amongst 10 best realms, update frontend
-
-        // debug
-        //console.log(JSON.stringify(most_used_data, null, 4);
-        //fs.appendFileSync('most_used_data', JSON.stringify(most_used_data, null, 4));
-        //console.log(JSON.stringify(most_used_data, null, 4));
-
-
         io.emit('update_used', most_used_data);
         break;
       }
