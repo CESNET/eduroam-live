@@ -16,6 +16,7 @@ module.exports = function(io) {
     // clear data
     most_used = {};
     most_provided = {};
+    io.emit("clear");
   }, 300 * 1000); // every 300 seconds
 
   // --------------------------------------------------------------------------------------
