@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // controller for presentation page
 // --------------------------------------------------------------------------------------
-angular.module('etlog').controller('presenstation_controller', ['$scope', '$http', '$q', function ($scope, $http, $q) {
+angular.module('etlog').controller('presenstation_controller', ['$scope', '$timeout', function ($scope, $timeout) {
   var graph_title1 = "organizace nejvíce poskytující konektivitu";
   var tag1 = "#most_provided";
   var hook1 = "update_provided";
@@ -10,12 +10,33 @@ angular.module('etlog').controller('presenstation_controller', ['$scope', '$http
   var hook2 = "update_used";
   var max_lines = 16;
   var socket = io();
+  $scope.timer = 0;
 
   advanced_terminal(socket, max_lines);
   //terminal_fun();
+  setup_timer($scope, $timeout, socket);
   graph_pres_new(graph_title1, tag1, hook1, socket);
   graph_pres_new(graph_title2, tag2, hook2, socket);
 }]);
+// --------------------------------------------------------------------------------------
+// setup frontend timer
+// --------------------------------------------------------------------------------------
+function setup_timer($scope, $timeout, socket)
+{
+  socket.on('clear', function() {
+    // this will actually be displayed as 0 because the first update will increment if before displaying
+    $scope.timer = -1;
+  })
+
+  function tick() {
+    $timeout(function() {
+      $scope.timer++;
+      tick();
+    }, 1000);
+  }
+
+  tick();
+}
 // --------------------------------------------------------------------------------------
 function terminal_fun()
 {
