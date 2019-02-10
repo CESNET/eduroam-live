@@ -13,7 +13,6 @@ angular.module('etlog').controller('presenstation_controller', ['$scope', '$time
   $scope.timer = 0;
 
   advanced_terminal(socket, max_lines);
-  //terminal_fun();
   setup_timer($scope, $timeout, socket);
   graph_pres_new(graph_title1, tag1, hook1, socket);
   graph_pres_new(graph_title2, tag2, hook2, socket);
@@ -36,29 +35,6 @@ function setup_timer($scope, $timeout, socket)
   }
 
   tick();
-}
-// --------------------------------------------------------------------------------------
-function terminal_fun()
-{
-  var i = 0;
-  var styles = [
-    {
-      "webkitTransform" : "translateX(-4%) rotateY(-5deg)"
-    },
-    {
-      "webkitTransform" : "translateX(0) rotateY(0)"
-    },
-    {
-      "webkitTransform" : "translateX(2.5%) rotateY(3deg)"
-    },
-  ];
-
-  setInterval(function() {
-    var el = document.getElementById("terminal");
-    el.style[Object.keys(styles[i])[0]] = styles[i][Object.keys(styles[i])[0]];
-    i++;
-    i = i % 3;
-  }, 60 * 1000); // every 60 seconds
 }
 // --------------------------------------------------------------------------------------
 // handle terminal
