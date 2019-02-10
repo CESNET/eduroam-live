@@ -165,9 +165,9 @@ function graph_pres_new(title, tag, event_name, socket)
   socket.on(event_name, function(data) {
     // ==================================================
     // transitions
-    var transition = svg.transition().duration(750);
-    var delay = function(d, i) { return i * 50; };
-    var t = d3.transition().duration(750);
+    var transition = svg.transition().duration(400);
+    var delay = function(d, i) { return i * 30; };
+    var t = d3.transition().duration(400);
 
     // ==================================================
     // Scale the range of the data in the domains
