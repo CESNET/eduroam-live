@@ -69,10 +69,10 @@ function advanced_terminal(socket, max_lines)
 function graph_pres_new(title, tag, event_name, socket)
 {
   // Setup svg using Bostock's margin convention
-  var margin = {top: 80, right: 0, bottom: 200, left: 70};
+  var margin = {top: 80, right: 0, bottom: 220, left: 70};
 
   var width = $(window).width() / 2 - 100;      // compensate for y axis labels
-  var height = 660 - margin.top - margin.bottom;
+  var height = 680 - margin.top - margin.bottom;
 
   var colors = [ "#4682b4", "#ea3933" ];
 
@@ -144,7 +144,7 @@ function graph_pres_new(title, tag, event_name, socket)
   legend.append("rect")
     .attr("width", 40)
     .attr("height", 40)
-    .attr("y", function(d, i) { return -20 + i * 40 - 10; })
+    .attr("y", function(d, i) { return i * 45 - 10; })
     .attr("x", function(d, i) { return 0; })
     .style("fill", function (d, i) { return colors[i]; })
     .style("opacity", "0.8")
@@ -152,7 +152,7 @@ function graph_pres_new(title, tag, event_name, socket)
   legend.append("text")
     .attr("width", 40)
     .attr("height", 40)
-    .attr("y", function(d, i) { return i * 40; })
+    .attr("y", function(d, i) { return i * 40 + 18; })
     .attr("x", function(d, i) { return 45; })
     .style("font-size", "24px")
     .style("fill", "white")
