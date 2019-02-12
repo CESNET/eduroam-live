@@ -3,6 +3,7 @@
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+  stroke-width: 2px;    /* to avoid line flickering */
 }
 .x.axis path {
   display: none;
