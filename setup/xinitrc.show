@@ -1,0 +1,32 @@
+#!/bin/bash
+xset -dpms
+xset s off
+xset s noblank
+
+#unclutter &
+xhost +SI:localuser:show
+#su -c "/usr/bin/chromium-browser https://spider.cesnet.cz/show --window-position=0,0 --window-size=3840,2160 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null" show
+
+#rm -rf /home/show/prvni
+#rm -rf /home/show/druhej
+
+# nejdriv vypnout VGA-1
+su -c "xrandr --output VGA-1 --off" show
+
+# pak na HDMI-1 --auto
+su -c "xrandr --output HDMI-1 --auto" show
+
+# pak na VGA-1 --right-of HDMI-1 --auto
+su -c "xrandr --output VGA-1 --right-of HDMI-1 --auto" show
+
+#su -c "xrandr --output VGA-1 --right-of HDMI-1" show
+
+# logy + grafy
+su -c "/usr/bin/chromium-browser https://monitor.eduroam.cz:8088/ --window-position=0,0 --window-size=1920,1080 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null" show &
+
+# cesnetron
+su -c "/usr/bin/chromium-browser https://spider.cesnet.cz/cesnetron --window-position=1920,0 --window-size=1920,1200 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null --user-data-dir=/home/show/druhej" show ###&
+
+# vlacek
+#su -c "xterm -geometry 200x30+1920-0 -display :0 /home/show/sl.sh" - show
+
