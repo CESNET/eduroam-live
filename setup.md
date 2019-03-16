@@ -6,3 +6,5 @@ browser windows with applications.
 
 The second [script](https://github.com/CESNET/eduroam-live/blob/master/setup/sl.sh) just creates a terminal with endless steam locomotive animation.
 This script must be ran manually after the demo is set up.
+
+![setup photo](https://github.com/CESNET/eduroam-live/blob/master/setup/setup1.jpg)
